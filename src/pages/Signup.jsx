@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 import { decryptData } from "../components/helpers/secure";
+import { Loader } from "../components/Loader";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -20,7 +21,10 @@ export default function Signup() {
   const navigate = useNavigate();
 
   let user = null;
-  if (localStorage.getItem("user") !== null) {
+  if (
+    localStorage.getItem("user") !== null &&
+    localStorage.getItem("user") !== undefined
+  ) {
     user = decryptData(localStorage.getItem("user"));
   }
 
@@ -41,9 +45,10 @@ export default function Signup() {
       );
       if (response.data.success) {
         toast.success("Signup successful! Please login.");
-        setloading(false);
-
-        navigate("/login");
+        setTimeout(() => {
+          setloading(false);
+          navigate("/login");
+        }, 1000);
       } else {
         toast.info(
           "An account is already in use with that Email or Username. Please try again."
@@ -56,17 +61,24 @@ export default function Signup() {
     }
   };
 
-  if (user !== null)
+  if (loading) return <Loader />;
+
+  if (user !== null && user !== undefined)
     return (
-      <h1
-        className="text-center my-20 text-lg lg:text-2xl
-"
-      >
-        You are Already Logged In as <b>{user.username}</b>
-      </h1>
+      <div className="flex flex-col items-center min-h-screen text-center pt-20">
+        <h1 className="text-lg lg:text-2xl mb-4">
+          You are Logged In as <b>{user.username}</b>
+        </h1>
+        <a href="/home">
+          <Button type="button" className="w-32">
+            Home
+          </Button>
+        </a>
+      </div>
     );
 
-  return (
+    else {
+      return (
     <div className="max-w-md mx-auto my-7 p-6 bg-white shadow-lg rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
       <h2 className="text-xl font-semibold mb-4">Sign Up</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -121,4 +133,7 @@ export default function Signup() {
       <Toaster />
     </div>
   );
+    }
+
+  
 }

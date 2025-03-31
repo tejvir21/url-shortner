@@ -13,11 +13,11 @@ export default function Contact() {
     <div className="max-w-md mx-auto my-10 p-4">
       <Card className="shadow-md">
         <CardHeader>
-          <CardTitle as="h1" size="xl" className="text-center">
+          <CardTitle as="h1" size="xl" className="text-center font-bold text-2xl">
             Contact Us
           </CardTitle>
         </CardHeader>
-        <CardDescription>
+        <CardDescription className="text-md">
           <CardContent className="text-center mb-4">
             We are here to help you with any questions or support you may need.
             Feel free to reach out to us via email.

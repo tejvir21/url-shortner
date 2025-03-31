@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
-import { Loader } from "../components/Loader";
 
 export default function RedirectPage() {
   const { shortId } = useParams();
@@ -10,6 +9,7 @@ export default function RedirectPage() {
 
   useEffect(() => {
     setloading(true);
+    toast.info("Redirecting you to your destination 😀")
     axios
       .get(`${import.meta.env.VITE_SERVER_URL}${shortId}`, {
         withCredentials: true,
@@ -20,6 +20,7 @@ export default function RedirectPage() {
       })
       .catch(() => {
         toast.info("URL not found!");
+        window.location.href = "/home/404"
         setloading(false);
       });
   }, [shortId]);
@@ -39,7 +40,7 @@ export default function RedirectPage() {
         <span className="absolute text-white text-lg md:text-2xl font-semibold top-1/2 -translate-y-1/2">
           LOADING...
         </span>
-        <Toaster />
+        <Toaster position="bottom-center"/>
       </div>
     );
 
@@ -57,7 +58,7 @@ export default function RedirectPage() {
       <span className="absolute text-white text-lg md:text-2xl font-semibold top-1/2 -translate-y-1/2">
         LOADING...
       </span>
-      <Toaster />
+      <Toaster position="bottom-center" />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const Loader = () => {
   return (
-    <div className="flex flex-col items-center space-y-4 p-6">
+    <div className="flex flex-col items-center space-y-4 p-6 text-gray-600">
       {/* Title */}
       <Skeleton className="h-6 w-48 rounded-md" />
 

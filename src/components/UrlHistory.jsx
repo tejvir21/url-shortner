@@ -14,6 +14,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Loader } from "./Loader";
+import { ClipboardCopy } from "lucide-react";
 
 export default function UrlHistory() {
   const [response, setResponse] = useState([]);
@@ -89,7 +90,7 @@ export default function UrlHistory() {
                         toast.success("Short URL copied to clipboard")
                       }
                     >
-                      Copy
+                      <ClipboardCopy />
                     </Button>
                   </CopyToClipboard>
                 </TableCell>

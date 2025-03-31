@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { decryptData } from "../components/helpers/secure";
 import { Loader } from "../components/Loader";
+import { ClipboardCopy, Trash } from "lucide-react";
 
 export default function Dashboard() {
   const [response, setResponse] = useState([]);
@@ -60,24 +61,59 @@ export default function Dashboard() {
     fetchData();
   }, [navigate]);
 
+  const handleDelete = async (shortId) => {
+    setloading(true);
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}api/url/delete`,
+        { shortId },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) toast.success("Short URL Deleted!");
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setloading(false);
+      setTimeout(() => {
+              window.location.href = "/dashboard"
+
+      }, 700)
+    }
+  };
+
   if (loading) return <Loader />;
 
   return (
     <div className="w-full mx-auto mt-8 bg-white p-4 shadow-md rounded-md lg:px-20">
-      <Card className="mb-10 lg:w-md mx-auto">
-        <CardHeader>
-          <CardTitle as="h2" size="md">
+      <Card className="mb-10 lg:w-md mx-auto shadow-lg border border-gray-200 py-0">
+        <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-t-md">
+          <CardTitle as="h2" size="md" className="text-lg font-bold">
             User Profile
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <CardDescription>Full Name: {user?.name}</CardDescription>
-          <CardDescription>Username: {user?.username}</CardDescription>
+        <CardContent className="p-6 space-y-4">
+          <div className="flex items-center space-x-4">
+            <div className="bg-blue-500 text-white rounded-full h-12 w-12 flex items-center justify-center text-xl font-bold">
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <CardDescription className="text-lg font-semibold">
+                {user?.name}
+              </CardDescription>
+              <CardDescription className="text-sm text-gray-500">
+                @{user?.username}
+              </CardDescription>
+            </div>
+          </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="p-4 border-t border-gray-200 text-center">
           <Button
             variant="link"
             href="/profile"
+            className="text-blue-600 hover:underline"
             onClick={() => toast.info("Edit feature coming soon!")}
           >
             Edit Profile
@@ -126,9 +162,16 @@ export default function Dashboard() {
                         toast.success("Short URL copied to clipboard")
                       }
                     >
-                      Copy
+                      <ClipboardCopy />
                     </Button>
                   </CopyToClipboard>
+                  <Button
+                    className="ml-1 bg-red-600 hover:bg-red-800"
+                    size="sm"
+                    onClick={() => handleDelete(element.shortId)}
+                  >
+                    <Trash />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -14,7 +14,7 @@ export default function Header() {
     // navigate("/login")
   }
   return (
-    <nav className="bg-blue-600 text-white px-4 flex justify-between items-center">
+    <nav className="bg-blue-600 text-white px-4 flex justify-between items-center font-bold">
       <Link to="/" className="text-xl font-bold">
         <img src={logo} alt="TinyWrap" className="h-25 w-30 inline-block" />
       </Link>
@@ -43,7 +43,7 @@ export default function Header() {
         {user === null ? (
           <Link
             to="/login"
-            className="hover:underline bg-cyan-500 p-2 px-3 font-bold rounded-4xl"
+            className="hover:scale-110 hover:drop-shadow-lg bg-gray-700 p-2 px-3 font-bold rounded-4xl"
             type="button"
           >
             SignIn
@@ -51,7 +51,7 @@ export default function Header() {
         ) : (
           <Link
             to="/logout"
-            className="hover:underline bg-red-600 font-bold p-2 px-3 rounded-4xl"
+            className="hover:scale-110 hover:drop-shadow-lg bg-red-600 font-bold p-2 px-3 rounded-4xl"
             type="button"
           >
             LogOut

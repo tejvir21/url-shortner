@@ -19,7 +19,7 @@ export default function ShortenUrl() {
         setloading(true);
         const response = await axios.post(
           `${import.meta.env.VITE_SERVER_URL}api/url/shorten`,
-          { originalUrl: url },
+          { originalUrl: url.trim() },
           {
             withCredentials: true,
           }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
@@ -36,33 +36,40 @@ export default function Login() {
       if (response.data.success) {
         const userData = encryptData(response.data.user);
         localStorage.setItem("user", userData);
+
         toast.success("Login successful!");
 
+        setTimeout(() => {
+          window.location.href = "/home";
+        }, 1000);
         setloading(false);
-        window.location.href = "/home";
       } else {
-        toast.error("Invalid credentials");
-
         setloading(false);
+        toast.error("Invalid credentials");
       }
     } catch (error) {
-      toast.error("Login failed");
-
       setloading(false);
+      toast.error("Login failed");
     }
   };
 
-  if (user !== null && user !== undefined)
-    return (
-      <h1
-        className="text-center my-20 text-lg lg:text-2xl
-"
-      >
-        You are Already Logged In as <b>{user.username}</b>
-      </h1>
-    );
+
 
   if (loading) return <Loader />;
+
+  if (user !== null && user !== undefined)
+    return (
+      <div className="flex flex-col items-center min-h-screen text-center pt-20">
+        <h1 className="text-lg lg:text-2xl mb-4">
+          You are Logged In as <b>{user.username}</b>
+        </h1>
+        <a href="/home">
+          <Button type="button" className="w-32">
+            Home
+          </Button>
+        </a>
+      </div>
+    );
 
   return (
     <div className="max-w-md mx-auto p-6 my-7 bg-white shadow-lg rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
@@ -101,7 +108,7 @@ export default function Login() {
           Sign up
         </a>
       </p>
-      <Toaster />
+      <Toaster position="bottom-center" />
     </div>
   );
 }
