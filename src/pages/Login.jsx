@@ -31,7 +31,7 @@ export default function Login() {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}api/auth/user/login`,
         { ...formData },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.data.success) {
         const userData = encryptData(response.data.user);
@@ -53,11 +53,13 @@ export default function Login() {
     }
   };
 
-
-
   if (loading) return <Loader />;
 
-  if (user !== null && user !== undefined)
+  if (user !== null && user !== undefined) {
+    setTimeout(() => {
+      window.location.href = "/home";
+    }, 1000);
+
     return (
       <div className="flex flex-col items-center min-h-screen text-center pt-20">
         <h1 className="text-lg lg:text-2xl mb-4">
@@ -70,7 +72,7 @@ export default function Login() {
         </a>
       </div>
     );
-
+  }
   return (
     <div className="max-w-md mx-auto p-6 my-7 bg-white shadow-lg rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
       <h2 className="text-xl font-semibold mb-4">LogIn</h2>

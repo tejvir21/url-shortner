@@ -41,7 +41,7 @@ export default function Signup() {
         { ...formData },
         {
           withCredentials: true,
-        }
+        },
       );
       if (response.data.success) {
         toast.success("Signup successful! Please login.");
@@ -51,7 +51,7 @@ export default function Signup() {
         }, 1000);
       } else {
         toast.info(
-          "An account is already in use with that Email or Username. Please try again."
+          "An account is already in use with that Email or Username. Please try again.",
         );
         setloading(false);
       }
@@ -63,7 +63,11 @@ export default function Signup() {
 
   if (loading) return <Loader />;
 
-  if (user !== null && user !== undefined)
+  if (user !== null && user !== undefined) {
+    setTimeout(() => {
+      window.location.href = "/home";
+    }, 1000);
+
     return (
       <div className="flex flex-col items-center min-h-screen text-center pt-20">
         <h1 className="text-lg lg:text-2xl mb-4">
@@ -76,64 +80,61 @@ export default function Signup() {
         </a>
       </div>
     );
-
-    else {
-      return (
-    <div className="max-w-md mx-auto my-7 p-6 bg-white shadow-lg rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
-      <h2 className="text-xl font-semibold mb-4">Sign Up</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          name="name"
-          type="text"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <Input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <Input
-          name="username"
-          type="text"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <div className="relative">
+  } else {
+    return (
+      <div className="max-w-md mx-auto my-7 p-6 bg-white shadow-lg rounded-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2">
+        <h2 className="text-xl font-semibold mb-4">Sign Up</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={formData.password}
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            value={formData.name}
             onChange={handleChange}
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-2 text-gray-600"
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </button>
-        </div>
+          <Input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <Input
+            name="username"
+            type="text"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <div className="relative">
+            <Input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-2 text-gray-600"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
-        <Button type="submit" className="w-full">
-          Sign Up
-        </Button>
-      </form>
-      <p className="mt-4 text-center">
-        Already have an account?{" "}
-        <a href="/login" className="text-blue-600">
-          Login
-        </a>
-      </p>
-      <Toaster />
-    </div>
-  );
-    }
-
-  
+          <Button type="submit" className="w-full">
+            Sign Up
+          </Button>
+        </form>
+        <p className="mt-4 text-center">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-600">
+            Login
+          </a>
+        </p>
+        <Toaster />
+      </div>
+    );
+  }
 }
