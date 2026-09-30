@@ -13,7 +13,11 @@ export default function Contact() {
     <div className="max-w-md mx-auto my-10 p-4">
       <Card className="shadow-md">
         <CardHeader>
-          <CardTitle as="h1" size="xl" className="text-center font-bold text-2xl">
+          <CardTitle
+            as="h1"
+            size="xl"
+            className="text-center font-bold text-2xl"
+          >
             Contact Us
           </CardTitle>
         </CardHeader>
@@ -25,7 +29,7 @@ export default function Contact() {
           <CardContent className="text-center font-bold mb-4">
             Email:
             <Link
-              to="https://tejvir.netlify.app/#contact"
+              to={`${import.meta.env.VITE_PORTFOLIO_URL}#contact`}
               target="_blank"
               className="font-bold rounded-4xl"
             >
@@ -40,11 +44,11 @@ export default function Contact() {
         </CardDescription>
         <CardFooter className="text-center">
           <Link
-            to="https://tejvir.netlify.app/"
+            to={import.meta.env.VITE_PORTFOLIO_URL}
             target="_blank"
             className="font-bold rounded-4xl"
           >
-            Visit Our Portfolio
+            Visit My Portfolio
           </Link>
         </CardFooter>
       </Card>

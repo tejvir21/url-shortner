@@ -28,7 +28,7 @@ export default function Analytics() {
         `${import.meta.env.VITE_SERVER_URL}api/url/analytics/${shortId.trim()}`,
         {
           withCredentials: true,
-        }
+        },
       );
       setloading(false);
       setAnalytics(response.data);
@@ -38,7 +38,7 @@ export default function Analytics() {
         navigate("/login");
         return;
       }
-      setAnalytics(null)
+      setAnalytics(null);
       toast.warning("Invalid Short URL!");
       setloading(false);
     }
@@ -98,7 +98,7 @@ export default function Analytics() {
               </a>
             </div>
             <div>
-              <b>Unique Visitors:</b>{" "}
+              <b>Unique Network Visitors:</b>{" "}
               <span className="font-bold text-lg text-green-600">
                 {analytics.queryset.visitHistory.length}
               </span>
